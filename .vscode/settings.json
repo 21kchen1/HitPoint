@@ -1,0 +1,35 @@
+{
+    // 代码格式化现在只支持插件设置
+    "files.encoding": "utf8",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportShadowedImports": "none"
+    },
+    // 自动补全设置
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}\\Anaconda3\\Lib\\site-packages",
+        "${workspaceFolder}\\Anaconda3\\Scripts",
+        "${workspaceFolder}\\Anaconda3\\envs\\badminton\\Lib\\site-packages",
+        "${workspaceFolder}\\Anaconda3\\envs\\badminton\\Scripts",
+    ],
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}\\Anaconda3\\Lib\\site-packages",
+        "${workspaceFolder}\\Anaconda3\\Scripts",
+        "${workspaceFolder}\\Anaconda3\\envs\\badminton\\Lib\\site-packages",
+        "${workspaceFolder}\\Anaconda3\\envs\\badminton\\Scripts",
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "badminton",
+            "database": "badminton",
+            "username": "root"
+        }
+    ],
+}
