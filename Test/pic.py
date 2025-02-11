@@ -44,5 +44,5 @@ def main(image_path):
 
 if __name__ == "__main__":
     # 替换为你的图片路径
-    image_path = "./1.jpg"
+    image_path = "./PICTURE/1.jpg"
     main(image_path)
