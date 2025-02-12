@@ -11,6 +11,7 @@ class Drawing(QWidget):
         self.resize(600, 400)
         self.setWindowTitle("拖拽绘制矩形")
         self.subRect = None
+        self.imagePath = "1.jpg"
 
     # 重写绘制函数
     def paintEvent(self, event):
@@ -18,8 +19,19 @@ class Drawing(QWidget):
         qp = QPainter()
         # 开始在窗口绘制
         qp.begin(self)
+
+        if self.imagePath:
+            self.drawImage(qp)
+
+        # 自定义画点方法
+        if self.subRect:
+            self.drawRect(qp)
+        # 结束在窗口的绘制
+        qp.end()
+
+    def drawImage(self, qp):
         # 加载图片
-        image = cv2.imread("1.jpg")
+        image = cv2.imread(self.imagePath)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # 转换为RGB格式
 
         # 转换为 QImage
@@ -31,11 +43,6 @@ class Drawing(QWidget):
         pixmap = QPixmap.fromImage(q_image)
 
         qp.drawPixmap(self.rect(), pixmap)
-        # 自定义画点方法
-        if self.subRect:
-            self.drawRect(qp)
-        # 结束在窗口的绘制
-        qp.end()
 
     def drawRect(self, qp):
         # 创建红色，宽度为4像素的画笔
@@ -52,6 +59,9 @@ class Drawing(QWidget):
         print("mouse release")
 
     def mouseMoveEvent(self, event):
+        if not event.buttons() == Qt.LeftButton:
+            return
+        print("move")
         start_x, start_y = self.subRect[0:2]
         self.subRect = (start_x, start_y, event.x() - start_x, event.y() - start_y)
         self.update()
