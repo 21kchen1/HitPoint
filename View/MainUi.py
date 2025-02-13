@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainView.ui'
+# Form implementation generated from reading ui file 'MainUi.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -97,15 +97,15 @@ class Ui_HitPoint(object):
         self.PathButton.setSizePolicy(sizePolicy)
         self.PathButton.setObjectName("PathButton")
         self.verticalLayout.addWidget(self.PathButton)
-        self.lineEdit = QtWidgets.QLineEdit(self.widget)
+        self.PathLineEdit = QtWidgets.QLineEdit(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(1)
-        sizePolicy.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy)
-        self.lineEdit.setReadOnly(True)
-        self.lineEdit.setObjectName("lineEdit")
-        self.verticalLayout.addWidget(self.lineEdit)
+        sizePolicy.setHeightForWidth(self.PathLineEdit.sizePolicy().hasHeightForWidth())
+        self.PathLineEdit.setSizePolicy(sizePolicy)
+        self.PathLineEdit.setReadOnly(True)
+        self.PathLineEdit.setObjectName("PathLineEdit")
+        self.verticalLayout.addWidget(self.PathLineEdit)
         self.horizontalLayout_2.addWidget(self.widget)
         self.StartButton = QtWidgets.QPushButton(self.MeauPath)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -227,7 +227,7 @@ class Ui_HitPoint(object):
         _translate = QtCore.QCoreApplication.translate
         HitPoint.setWindowTitle(_translate("HitPoint", "HitPoint"))
         self.TipLabel.setText(_translate("HitPoint", "Tip: Use the left mouse button to select the box and the right mouse button to mark."))
-        self.PathButton.setText(_translate("HitPoint", "Setting File Path"))
+        self.PathButton.setText(_translate("HitPoint", "Select Folder"))
         self.StartButton.setText(_translate("HitPoint", "Start"))
         self.YLabel.setText(_translate("HitPoint", "Y:"))
         self.xLabel.setText(_translate("HitPoint", "X:"))

@@ -57,7 +57,7 @@ class Canvas(QWidget):
     """
     def drawImage(self, qp: QPainter) -> None:
         # 加载图片 并 转为 RGB 格式
-        image = cv2.cvtColor(cv2.imread(self.imagePath))
+        image = cv2.cvtColor(cv2.imread(self.imagePath), cv2.COLOR_BGR2RGB)
 
         # 转换为 QImage
         height, width, channels = image.shape
@@ -102,7 +102,7 @@ class Canvas(QWidget):
     """
     def createCoord(self, event) -> None:
         if not self.aimRect:
-            return 
+            return
         # 坐标计算
         ansX, ansY = CoordAlgo.edgePercentCoord(event.y(), event.x(), self.aimRect[1], self.aimRect[0], self.aimRect[3], self.aimRect[2])
         logging.info(f"coord: ({ansX}, {ansY})")

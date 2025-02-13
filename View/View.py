@@ -1,4 +1,4 @@
-from View.MainView import Ui_HitPoint
+from View.MainUi import Ui_HitPoint
 from View.Canvas import Canvas
 from PyQt5 import QtWidgets, QtCore
 import sys
@@ -49,6 +49,18 @@ class View:
         self.mainWidget.setMinimumSize(QtCore.QSize(self.width, self.height))
         # 设置关闭事件
         self.mainWidget.closeEvent = self.closeEvent
+
+    """
+        文件夹路径设置
+    """
+    def selectFolder(self) -> str:
+        return QtWidgets.QFileDialog.getExistingDirectory(self.mainWidget, "Select Folder")
+
+    """
+        文件夹错误
+    """
+    def folderError(self) -> None:
+        QtWidgets.QMessageBox.critical(self.mainWidget, "Error", "Folder exception.")
 
     """
         执行

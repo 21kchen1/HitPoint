@@ -146,12 +146,12 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Setting File Path</string>
+               <string>Select Folder</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QLineEdit" name="PathLineEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
