@@ -1,7 +1,9 @@
+import logging
 import cv2
-from PyQt5.QtGui import QPainter, QPen, QPixmap, QImage, QPalette, QColor
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtGui import QPainter, QPen, QPixmap, QImage
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt
+from Utils import CoordAlgo
 
 """
     画板：显示图像与标记
@@ -15,17 +17,14 @@ class Canvas(QWidget):
     """
     def __init__(self, parent= None) -> None:
         super(Canvas, self).__init__(parent)
-        # 背景白色
-        # self.autoFillBackground()
-        # palette = QPalette()
-        # palette.setColor(QPalette.Window, QColor("white"))
-        # self.setPalette(palette)
-        # 矩形四角坐标元组
-        self.subRect = None
+        # 矩形左上角坐标
+        self.startPoint = None
+        # 矩形左上角坐标，右下角坐标
+        self.aimRect = None
         # 背景图片路径
         self.imagePath = None
         # 坐标生成回调函数
-        self.indexCallback = None
+        self.coordCallback = None
 
         # 画笔颜色
         self.penSetting = (Qt.red, 4)
@@ -42,10 +41,15 @@ class Canvas(QWidget):
         绘制标记矩形
         @param qp QPainter
     """
-    def drawsubRect(self, qp: QPainter) -> None:
+    def drawAimRect(self, qp: QPainter) -> None:
         # 红色，宽度为 4 像素
-        qp.setPen(QPen(*self.penSetting))
-        qp.drawRect(*self.subRect)
+        pen = QPen(*self.penSetting)
+        qp.setPen(pen)
+        qp.drawRect(self.aimRect[0], self.aimRect[1], self.aimRect[2] - self.aimRect[0], self.aimRect[3] - self.aimRect[1])
+        # 虚线
+        pen.setStyle(Qt.DashLine)
+        qp.setPen(pen)
+        qp.drawLine(self.aimRect[0], (self.aimRect[1] + self.aimRect[3]) / 2, self.aimRect[2], (self.aimRect[1] + self.aimRect[3]) / 2)
 
     """
         加载并绘制背景图像
@@ -80,8 +84,8 @@ class Canvas(QWidget):
         if self.imagePath:
             self.drawImage(qp)
         # 绘制矩形
-        if self.subRect:
-            self.drawsubRect(qp)
+        if self.aimRect:
+            self.drawAimRect(qp)
 
         qp.end()
 
@@ -89,19 +93,22 @@ class Canvas(QWidget):
         设置坐标生成回调函数
         @param callback 回调函数
     """
-    def setIndexCallback(self, callback) -> None:
-        self.indexCallback = callback
+    def setCoordCallback(self, callback) -> None:
+        self.coordCallback = callback
 
     """
         坐标生成函数
         @param event 事件
     """
-    def createIndex(self, event) -> None:
+    def createCoord(self, event) -> None:
+        if not self.aimRect:
+            return 
         # 坐标计算
-
-        if not self.indexCallback:
+        ansX, ansY = CoordAlgo.edgePercentCoord(event.y(), event.x(), self.aimRect[1], self.aimRect[0], self.aimRect[3], self.aimRect[2])
+        logging.info(f"coord: ({ansX}, {ansY})")
+        if not self.coordCallback:
             return
-        self.indexCallback()
+        self.coordCallback(ansX, ansY)
 
     """
         鼠标点击事件
@@ -109,11 +116,11 @@ class Canvas(QWidget):
     def mousePressEvent(self, event) -> None:
         # 左键 设置初始点
         if event.buttons() == Qt.LeftButton:
-            self.subRect = (event.x(), event.y(), 0, 0)
+            self.startPoint = (event.x(), event.y())
 
         # 右键 生成坐标
         if event.buttons() == Qt.RightButton:
-            self.createIndex(event)
+            self.createCoord(event)
 
     """
         鼠标移动事件
@@ -123,6 +130,5 @@ class Canvas(QWidget):
         # 只有左键点击时才有效
         if not event.buttons() == Qt.LeftButton:
             return
-        start_x, start_y = self.subRect[0:2]
-        self.subRect = (start_x, start_y, event.x() - start_x, event.y() - start_y)
+        self.aimRect = (self.startPoint[0], self.startPoint[1], event.x(), event.y())
         self.update()
