@@ -14,7 +14,6 @@ def main() -> None:
     service = Servcie()
     # 控制器
     controller = Controller(view, service)
-    view.canvas.setImage("./1.jpg")
     view.run()
 
 if __name__ == "__main__":

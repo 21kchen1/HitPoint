@@ -90,6 +90,13 @@ class Canvas(QWidget):
         qp.end()
 
     """
+        清理矩形
+    """
+    def cleanRect(self) -> None:
+        self.aimRect = None
+        self.update()
+
+    """
         设置坐标生成回调函数
         @param callback 回调函数
     """
@@ -105,6 +112,8 @@ class Canvas(QWidget):
             return
         # 坐标计算
         ansX, ansY = CoordAlgo.edgePercentCoord(event.y(), event.x(), self.aimRect[1], self.aimRect[0], self.aimRect[3], self.aimRect[2])
+        if abs(ansX) >= 1 or ansY >= 1 or ansY < 0:
+            ansX = ansY = 0
         logging.info(f"coord: ({ansX}, {ansY})")
         if not self.coordCallback:
             return
