@@ -1,5 +1,6 @@
 import csv
 import os
+from copy import deepcopy
 
 """
     服务
@@ -106,13 +107,46 @@ class Servcie:
             return False
 
         # 下标异常
-        if index < 0 or index + 1 >= len(self.timestampData):
+        if index < 0 or index >= len(self.timestampData) - 1:
             return False
 
         with open(self.storeFilePath, "a", newline= "") as file:
-            rowData = self.timestampData[index + 1]
+            rowData = deepcopy(self.timestampData[index + 1])
             rowData.extend([x, y])
             csv.writer(file).writerow(rowData)
+
+        return True
+
+    """
+        删除指定坐标
+        @param index 数据下标
+        @return 删除成功
+    """
+    def deletePosition(self, index: int) -> bool:
+        # 存储文件异常
+        if not self.storeFilePath or not os.path.exists(self.storeFilePath):
+            return False
+
+        # 下标异常
+        if index < 0:
+            return False
+
+        # 读取已有数据 写入除最后的数据
+        dataRecord = []
+        with open(self.storeFilePath, mode= "r", newline= "") as infile:
+            reader = csv.reader(infile)
+            dataRecord = deepcopy(list(reader))
+            lineCount = len(dataRecord)
+            # 如果只剩下属性 或 下标异常
+            if lineCount <= 1 or index >= lineCount - 1:
+                return False
+
+        with open(self.storeFilePath, mode= "w", newline= "") as outfile:
+            writer = csv.writer(outfile)
+            for i, row in enumerate(dataRecord):
+                if i == index + 1:
+                    continue
+                writer.writerow(row)
 
         return True
 

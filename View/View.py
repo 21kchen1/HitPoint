@@ -137,6 +137,12 @@ class View:
                                               QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
 
     """
+        取消坐标异常
+    """
+    def cancelError(self) -> None:
+        QtWidgets.QMessageBox.critical(self.mainWidget, "Error", "There is no processed data.")
+
+    """
         执行
     """
     def run(self) -> None:

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>745</width>
-    <height>597</height>
+    <width>752</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -358,6 +358,19 @@
            </property>
            <property name="text">
             <string>Invalid</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="CancelButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Cancel</string>
            </property>
           </widget>
          </item>

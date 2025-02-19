@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_HitPoint(object):
     def setupUi(self, HitPoint):
         HitPoint.setObjectName("HitPoint")
-        HitPoint.resize(745, 597)
+        HitPoint.resize(752, 554)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(1)
@@ -217,6 +217,14 @@ class Ui_HitPoint(object):
         self.InvalidButton.setSizePolicy(sizePolicy)
         self.InvalidButton.setObjectName("InvalidButton")
         self.horizontalLayout_4.addWidget(self.InvalidButton)
+        self.CancelButton = QtWidgets.QPushButton(self.MeauJudge)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.CancelButton.sizePolicy().hasHeightForWidth())
+        self.CancelButton.setSizePolicy(sizePolicy)
+        self.CancelButton.setObjectName("CancelButton")
+        self.horizontalLayout_4.addWidget(self.CancelButton)
         self.horizontalLayout.addWidget(self.MeauJudge)
         self.gridLayout.addWidget(self.MeauWidget, 1, 0, 1, 1)
 
@@ -234,3 +242,4 @@ class Ui_HitPoint(object):
         self.NumLabel.setText(_translate("HitPoint", "Now/Total:"))
         self.ValidButton.setText(_translate("HitPoint", "Valid"))
         self.InvalidButton.setText(_translate("HitPoint", "Invalid"))
+        self.CancelButton.setText(_translate("HitPoint", "Cancel"))

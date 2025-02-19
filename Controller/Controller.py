@@ -135,6 +135,24 @@ class Controller:
         self.updateNum()
 
     """
+        取消坐标
+        删除最后一个保存的坐标，并回到上一张图片处理
+    """
+    def cancelPosition(self) -> None:
+        # 如果没有处理好的坐标
+        if self.service.imageIndex <= 0:
+            self.view.cancelError()
+            return
+
+        self.service.imageIndex -= 1
+        # 清除最后的坐标
+        self.service.deletePosition(self.service.imageIndex)
+
+        self.resetData()
+        self.showImage(self.service.imageIndex)
+        self.updateNum()
+
+    """
         完成处理
     """
     def finshProcess(self) -> None:
@@ -167,3 +185,5 @@ class Controller:
         self.view.ui.ValidButton.clicked.connect(self.validPosition)
         # 无效
         self.view.ui.InvalidButton.clicked.connect(self.invalidPosition)
+        # 取消
+        self.view.ui.CancelButton.clicked.connect(self.cancelPosition)
