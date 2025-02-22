@@ -8,7 +8,7 @@ from copy import deepcopy
     @author chen
 """
 class Servcie:
-    STORE_NAME = "ball_position.csv"
+    STORE_NAME = "POSITION.csv"
     STORE_COLUMNS_LIST = ["xPosition", "yPosition"]
 
     def __init__(self) -> None:
