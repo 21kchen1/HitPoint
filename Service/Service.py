@@ -8,7 +8,8 @@ from copy import deepcopy
     @author chen
 """
 class Servcie:
-    STORE_NAME = "POSITION.csv"
+    TYPE = "POSITION"
+    STORE_NAME = TYPE + ".csv"
     STORE_COLUMNS_LIST = ["xPosition", "yPosition"]
 
     def __init__(self) -> None:
@@ -113,6 +114,7 @@ class Servcie:
         with open(self.storeFilePath, "a", newline= "") as file:
             rowData = deepcopy(self.timestampData[index + 1])
             rowData.extend([x, y])
+            rowData[0] = Servcie.TYPE
             csv.writer(file).writerow(rowData)
 
         return True
