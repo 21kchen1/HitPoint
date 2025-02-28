@@ -2,6 +2,8 @@ import csv
 import os
 from copy import deepcopy
 
+from Utils import Path
+
 """
     服务
     包括文件选择、读取、存储等
@@ -9,6 +11,7 @@ from copy import deepcopy
 """
 class Servcie:
     TYPE = "POSITION"
+    PRE_TYPE = "PICTURE"
     STORE_NAME = TYPE + ".csv"
     STORE_COLUMNS_LIST = ["xPosition", "yPosition"]
 
@@ -34,27 +37,36 @@ class Servcie:
         if not os.path.exists(folderPath):
             return False
 
-        self.folderPath = folderPath
         # 可能的 csv 文件
         csvList = []
         # 可能的图片文件
         imageList = []
-        # 获取所有文件并分类
-        for filePath in os.listdir(self.folderPath):
-            # 图片
-            if filePath.endswith((".png", ".jpg", ".jpeg")):
-                imageList.append(filePath)
-            # csv
-            elif filePath.endswith(".csv"):
-                csvList.append(filePath)
 
-        # 如果文件数量异常
-        if not len(csvList) == 1 or len(imageList) < 1:
+        # 查找存储图片的文件夹
+        for filePath in Path.getFilePaths(folderPath):
+            # csv
+            if not filePath.endswith((f"{Servcie.TYPE}.csv", f"{Servcie.PRE_TYPE}.csv")):
+                continue
+            csvList.append(filePath)
+        # 如果csv文件数量异常
+        if not len(csvList) == 1:
+            return False
+        # 设置存储文件夹路径
+        self.folderPath = os.path.dirname(csvList[0])
+
+        # 获取图片文件名
+        for fileName in os.listdir(self.folderPath):
+            # 图片
+            if not fileName.endswith((".png", ".jpg", ".jpeg")):
+                continue
+            imageList.append(fileName)
+        # 图片数量异常
+        if len(imageList) < 1:
             return False
 
         # 获取时间戳数据
         timestampData = []
-        with open(os.path.join(self.folderPath, csvList[0]), "r") as file:
+        with open(os.path.join(csvList[0]), "r") as file:
             timestampData = list(csv.reader(file))
 
         # 如果时间戳与图片数量不对应
