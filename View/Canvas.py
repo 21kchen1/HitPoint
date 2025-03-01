@@ -49,7 +49,7 @@ class Canvas(QWidget):
         # 虚线
         pen.setStyle(Qt.DashLine)
         qp.setPen(pen)
-        qp.drawLine(self.aimRect[0], (self.aimRect[1] + self.aimRect[3]) / 2, self.aimRect[2], (self.aimRect[1] + self.aimRect[3]) / 2)
+        qp.drawLine(self.aimRect[0], int((self.aimRect[1] + self.aimRect[3]) / 2), self.aimRect[2], int((self.aimRect[1] + self.aimRect[3]) / 2))
 
     """
         加载并绘制背景图像
