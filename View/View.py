@@ -59,7 +59,6 @@ class View:
 
         # 设置大小
         self.mainWidget.resize(self.width, self.height)
-        self.mainWidget.setMinimumSize(QtCore.QSize(self.width, self.height))
         # 设置关闭事件
         self.mainWidget.closeEvent = self.closeEvent
         # 待机模式
